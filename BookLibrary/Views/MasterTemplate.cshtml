@@ -1,0 +1,29 @@
+﻿@{
+	Layout = null;
+}
+
+@{
+	string TitleName = ViewBag.TitleName;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>@TitleName</title>
+</head>
+
+<body>
+	<!-- подключаем файлы jQuery -->
+	<script src='@Url.Content("~/lib/jquery/dist/jquery.js")'></script>
+
+	<!-- подключаем файлы Bootstrap -->
+	<link href='@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")' rel="stylesheet" type="text/css" />
+	<script src='@Url.Content("~/lib/bootstrap/dist/js/bootstrap.min.js")'></script>
+
+	<!-- содержимое обычного представления -->
+	@RenderBody()
+
+</body>
+</html>

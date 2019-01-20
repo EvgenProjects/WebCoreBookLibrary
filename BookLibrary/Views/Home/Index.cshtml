@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BookLibrary.Models.Book>
+
+@{
+	ViewBag.TitleName = "Библиотека книг";
+	Layout = "~/Views/MasterTemplate.cshtml";
+}
+
+<div class="text-center" style="width:80%; padding-left:10%">
+
+	<h3>@ViewBag.TitleName</h3>
+
+	<div style="padding-top:20px; padding-bottom:20px;">
+		@Html.ActionLink("+ Добавить книгу", "AddBook", "", null, new { @style = "background-color:yellow; font-size:18px;" })
+	</div>
+
+	<table class="table table-striped padding-base-vertical">
+		<tr>
+			<th class="text-center">
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+
+			<th class="text-center">
+				@Html.DisplayNameFor(model => model.Author)
+			</th>
+
+			<th class="text-center">
+				@Html.DisplayNameFor(model => model.BookTypeId)
+			</th>
+
+			<th class="text-center">
+			</th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.Author)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.BookType.Name)
+				</td>
+
+				<td>
+					@Html.ActionLink("Редактировать", "EditBook", new { id = item.Id }) |
+					@Html.ActionLink("Удалить", "DeleteBook", new { id = item.Id })
+				</td>
+			</tr>
+		}
+	</table>
+</div>
