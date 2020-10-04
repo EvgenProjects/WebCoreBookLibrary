@@ -1,0 +1,80 @@
+﻿@model BookLibrary.ViewModels.User.UserRegisterViewModel
+
+@{
+	ViewBag.TitleName = "Создание пользователя";
+	Layout = "~/Views/MasterTemplate.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Регистрация</title>
+</head>
+
+<body>
+
+	<!-- подключаем файлы jQuery -->
+	<script src='@Url.Content("~/Scripts/jquery-3.0.0.min.js")'></script>
+
+	<!-- подключаем файлы Bootstrap -->
+	<link href='@Url.Content("~/Content/bootstrap.min.css")' rel="stylesheet" type="text/css" />
+	<script src='@Url.Content("~/Scripts/bootstrap.min.js")'></script>
+
+	<div class="control-label col-md-offset-2" style="padding-top:10px;">
+		<h3>@ViewBag.TitleName</h3>
+	</div>
+
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+
+		<div class="pl-4">
+			@Html.ValidationSummary(true)
+
+            <!-- user name -->
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label" })
+                @Html.EditorFor(model => model.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+
+            <BR />
+
+            <!-- email -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.LoginEmail, new { @class = "control-label" })
+				@Html.EditorFor(model => model.LoginEmail, new { @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.LoginEmail)
+			</div>
+
+			<BR />
+
+			<!-- password -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.Password, new { @class = "control-label" })
+				@Html.EditorFor(model => model.Password, new { @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Password)
+			</div>
+
+			<BR />
+
+			<!-- confirm password -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label" })
+				@Html.EditorFor(model => model.ConfirmPassword, new { @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.ConfirmPassword)
+			</div>
+			
+			<BR />
+
+			<!-- Сохранить -->
+			<div class="form-group">
+				<input type="submit" value="Сохранить" class="btn btn-info" />
+			</div>
+		</div>
+	}
+
+</body>
+</html>

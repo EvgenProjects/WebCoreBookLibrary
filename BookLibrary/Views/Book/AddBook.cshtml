@@ -1,18 +1,17 @@
-﻿@model BookLibrary.Models.Book;
+﻿@model BookLibrary.ViewModels.Book.CreateBookViewModel;
 
 @{
-	ViewBag.TitleName = "Добавление книги";
 	Layout = "~/Views/MasterTemplate.cshtml";
 }
 
 @using (Html.BeginForm())
 {
 	<div class="control-label col-md-offset-2" style="padding-top:10px;">
-		<a href='@Url.Action("Index")'>Библиотека книг</a>
+		<a href='@Url.Action("Index", "Home")'>Book library</a>
 	</div>
 
 	<div class="control-label col-md-offset-2" style="padding-top:10px;">
-		<h3>@ViewBag.TitleName</h3>
+		<h3>Topic: Adding book</h3>
 	</div>
 
 	<div class="form-horizontal">
@@ -33,12 +32,11 @@
 
 		<div class="form-inline" style="padding-top:20px;">
 			@Html.LabelFor(model => model.BookTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-			@Html.DropDownListFor(model => model.BookTypeId, (IEnumerable<SelectListItem>)ViewBag.BookTypes, "", new { htmlAttributes = new { @class = "form-control", size = 20 } })
-			@Html.ValidationMessageFor(model => model.BookTypeId, "", new { @class = "text-danger" })
+			@Html.DropDownListFor(model => model.BookTypeId, Model.BookTypesForDropdownList, "", new { htmlAttributes = new { @class = "form-control", size = 20 } })
 		</div>
 
 		<div class="col-md-offset-2" style="padding-top:20px;">
-			<input type="submit" value="Добавить" class="btn btn-success" />
+			<input type="submit" value="Add" class="btn btn-success" />
 		</div>
 
 	</div>

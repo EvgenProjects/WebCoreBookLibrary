@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BookLibrary.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using Microsoft.EntityFrameworkCore; // add for sql server (options => options.UseSqlServer(connection))
-using BookLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace BookLibrary
 {
@@ -24,20 +24,29 @@ namespace BookLibrary
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// add db connection
 			string connection = Configuration.GetConnectionString("DefaultConnection");
-			services.AddDbContext<BookContext>(options => options.UseSqlServer(connection));
+			services.AddDbContext<MyDbContext>(options => options.UseSqlServer(connection));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            // for login
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Name = ".my.Application";
+                    options.LoginPath = new PathString("/Authentication/Login");
+                });
+
+            // auto mapper
+            services.AddAutoMapper(GetType().Assembly);
+        }
+
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
-			if (env.IsDevelopment())
+            if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
@@ -47,7 +56,10 @@ namespace BookLibrary
 				app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+            // for login
+            app.UseAuthentication();
+
+            app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 

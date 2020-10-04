@@ -15,15 +15,31 @@
 </head>
 
 <body>
-	<!-- подключаем файлы jQuery -->
-	<script src='@Url.Content("~/lib/jquery/dist/jquery.js")'></script>
 
-	<!-- подключаем файлы Bootstrap -->
-	<link href='@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")' rel="stylesheet" type="text/css" />
-	<script src='@Url.Content("~/lib/bootstrap/dist/js/bootstrap.min.js")'></script>
+    <!-- jQuery library -->
+    <script src='@Url.Content("~/lib/jquery/dist/jquery.js")'></script>
 
-	<!-- содержимое обычного представления -->
-	@RenderBody()
+    <!-- Bootstrap library -->
+    <link href='@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")' rel="stylesheet" type="text/css" />
+    <script src='@Url.Content("~/lib/bootstrap/dist/js/bootstrap.min.js")'></script>
+
+    <!-- Authentication menu -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span>@User.Identity.Name</span>
+
+        <a href='@Url.Action("Logoff", "Authentication")'> Выйти... </a>
+    }
+
+    else
+    {
+        <a href='@Url.Action("Login", "Authentication")'> Войти... </a>
+
+        <a href='@Url.Action("Register", "Authentication")'> Регистрация пользователя... </a>
+    }
+
+    <!-- body -->
+    @RenderBody()
 
 </body>
 </html>

@@ -1,0 +1,36 @@
+﻿@model BookLibrary.ViewModels.Book.EditBookViewModel;
+@{
+    Layout = "~/Views/MasterTemplate.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="control-label col-md-offset-2" style="padding-top:10px;">
+        <a href='@Url.Action("Index", "Home")'>Book library</a>
+    </div>
+
+    <div class="control-label col-md-offset-2" style="padding-top:10px;">
+        Topic: Editing book
+    </div>
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-inline" style="padding-top:20px;">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", size = 40 } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-inline" style="padding-top:20px;">
+            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control", size = 40 } })
+            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-inline" style="padding-top:20px;">
+            @Html.LabelFor(model => model.BookTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DropDownListFor(model => model.BookTypeId, Model.BookTypesForDropdownList, "", new { htmlAttributes = new { @class = "form-control", size = 20 } })
+        </div>
+        <div class="col-md-offset-2" style="padding-top:20px;">
+            <input type="submit" value="Update" class="btn btn-success" />
+        </div>
+    </div>
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Book.ShowBookViewModel>
+
+@{
+	Layout = "~/Views/MasterTemplate.cshtml";
+}
+
+<style>
+    .my_table1 {
+        border-radius: 10px;
+        box-sizing: border-box;
+        -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    }
+
+    .my_th1 {
+        font-family: Lato-Bold;
+        font-size: 18px;
+        color: #fff;
+        line-height: 1.4;
+        background-color: #6c7ae0;
+    }
+
+    .my_td1 {
+        color: #212529;
+    }
+
+</style>
+<div class="text-center">
+
+	<h3>Book library</h3>
+
+	<div>
+		@Html.ActionLink("+ Add book", "AddBook", "Book", null, new { @style = "background-color:yellow; font-size:18px;" })
+	</div>
+    
+    <BR />
+
+    <div class="container my_table1">
+        <div class="row">
+            <div class="col-md-3 my_th1">
+				@Html.DisplayNameFor(model => model.Name)
+			</div>
+
+            <div class="col-md-3 my_th1">
+				@Html.DisplayNameFor(model => model.Author)
+            </div>
+
+            <div class="col-md-3 my_th1">
+				@Html.DisplayNameFor(model => model.BookTypeName)
+            </div>
+
+            <div class="col-md-3 my_th1">
+                &nbsp;
+            </div>
+		</div>
+
+		@foreach (var item in Model)
+		{
+		    <div class="row">
+                <div class="col-md-3 my_td1">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </div>
+
+                <div class="col-md-3 my_td1">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </div>
+
+				<div class="col-md-3 my_td1">
+					@Html.DisplayFor(modelItem => item.BookTypeName)
+				</div>
+
+				<div class="col-md-3 my_td1">
+					@Html.ActionLink("Редактировать", "EditBook", new { id = item.Id })
+					@Html.ActionLink("Удалить", "DeleteBook", new { id = item.Id })
+				</div>
+			</div>
+		}
+	</div>
+</div>
