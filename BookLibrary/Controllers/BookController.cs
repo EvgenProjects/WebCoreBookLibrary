@@ -147,12 +147,23 @@ namespace BookLibrary.Controllers
         // fill items for DropdownList
         protected IEnumerable<SelectListItem> GetBookTypesForDropdownList()
         {
-            return _myDbContext.BookTypes.Select(item =>
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem
+            {
+                Text = "Add book type...",
+                Value = "-1"
+            });
+
+            var items = _myDbContext.BookTypes.Select(item =>
                 new SelectListItem
                 {
                     Text = item.Name,
                     Value = item.Id.ToString()
                 });
+
+            list.AddRange(items);
+
+            return list;
         } 
 
 	}
